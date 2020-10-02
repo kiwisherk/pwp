@@ -1,8 +1,10 @@
 # pwp
-A briefer 'ip a' command
-I never liked the command 'ip'. I can never remember the command line arguments and the help message is too obtuse.      
-Also, it is too verbose, with on interface printing five lines. This program runs the command 'ip a' and presents some   
-of the information in a clearer way.                                                                                     
+A briefer 'ip a' command.
+
+I never liked the command 'ip'. I can never remember the command line arguments and the help 
+message is too obtuse. Also, it is too verbose, with on interface printing five lines. 
+
+This program runs the command 'ip a' and presents some of the information in a clearer way.                                                                                     
 
 usage: pyp [-h] [-a] [-6] [-e] [-m]
 
