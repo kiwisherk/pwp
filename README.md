@@ -11,10 +11,15 @@ usage: pyp [-h] [-a] [-6] [-e] [-m]
 Make 'ip a' a litttle briefer
 
 optional arguments:
+  
   -h, --help   show this help message and exit
+  
   -a, --all    List all interfaces
+  
   -6, --ipv6   List all interfaces with IPv6 addresses
+  
   -e, --ether  List the Ethernet addresses of the interfaces
+  
   -m, --mtu    List the MTU of the interfaces
 
 That's all folks!
