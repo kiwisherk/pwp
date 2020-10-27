@@ -23,3 +23,5 @@ optional arguments:
   -m, --mtu    List the MTU of the interfaces
 
 That's all folks!
+
+(c) Erik Sherk
