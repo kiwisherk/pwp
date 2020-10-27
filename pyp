@@ -40,7 +40,12 @@ num_int = 0       # The number of interfaces
 #
 # Run the program 'ip a' and save the output in 'output
 #
-process = subprocess.run('ip a', shell=True, check=True, stdout=subprocess.PIPE, universal_newlines=True)
+try: 
+    process = subprocess.run('ip a', shell=True, check=True, stdout=subprocess.PIPE, stderr=None, universal_newlines=True)
+except subprocess.CalledProcessError:
+    print("This script can't find the 'ip' program?")
+    exit()
+
 output = process.stdout
 
 #
@@ -79,7 +84,7 @@ for li in output.splitlines():
 # Now look for the IPv4 address. Examples...
 # 	inet 192.168.4.26/24 brd 192.168.4.255 en0
 #       inet 192.168.100.1/24 brd 192.168.100.255 scope global virbr0
-#    Also, crate a list of ip addresses in case we have more than one address on the interface
+#    Also, create a list of ip addresses in case we have more than one address on the interface
 
         inet = re.match( r'.+inet ([\d./]+) ', li)
 
@@ -89,7 +94,7 @@ for li in output.splitlines():
 # Now look for IPv6 address. Examples...
 #	inet6 fe80::1c24:9212:5daf:90ab/64 secured scopeid 0x6
 #       inet6 fe80::92e2:baff:fe14:2908/64 scope link 
-#    Also, crate a list of ip addresses in case we have more than one address on the interface
+#    Also, create a list of ip addresses in case we have more than one address on the interface
 
         inet6 = re.match( r'.+inet6 ([0-9aA-fF:]+/\d+) ', li)
 
