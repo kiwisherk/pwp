@@ -24,4 +24,7 @@ optional arguments:
 
 That's all folks!
 
+Updates: Now we check for multiple IPs on an interface.
+Updates: Now we check that the 'ip' command ran successfully."
+
 (c) Erik Sherk
