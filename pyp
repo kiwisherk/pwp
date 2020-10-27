@@ -79,20 +79,22 @@ for li in output.splitlines():
 # Now look for the IPv4 address. Examples...
 # 	inet 192.168.4.26/24 brd 192.168.4.255 en0
 #       inet 192.168.100.1/24 brd 192.168.100.255 scope global virbr0
-#
+#    Also, crate a list of ip addresses in case we have more than one address on the interface
+
         inet = re.match( r'.+inet ([\d./]+) ', li)
 
         if inet:
-            intfs[num_int].update( {'addr' : inet.group(1)})
+           intfs[num_int].setdefault('addr', []).append(inet.group(1))
 #
 # Now look for IPv6 address. Examples...
 #	inet6 fe80::1c24:9212:5daf:90ab/64 secured scopeid 0x6
 #       inet6 fe80::92e2:baff:fe14:2908/64 scope link 
-            
+#    Also, crate a list of ip addresses in case we have more than one address on the interface
+
         inet6 = re.match( r'.+inet6 ([0-9aA-fF:]+/\d+) ', li)
 
         if inet6:
-            intfs[num_int].update( {'ipv6' : inet6.group(1)})            
+            intfs[num_int].setdefault('ipv6', []).append(inet6.group(1))
 #
 # Get the MAC address
 #	ether f0:18:98:a6:7f:fd
@@ -102,7 +104,7 @@ for li in output.splitlines():
 
         if MAC:
             intfs[num_int].update( {'ether' : MAC.group(1)})
-
+#print (intfs)
 # Now delete the dummy empty dict that is first in the list. Couldn't get it to work without first creating it.
 del intfs[0]
 
@@ -115,11 +117,12 @@ for le in intfs:
     if allint or 'addr' in le:
         print ("%-10s" % le['name'],end = ' ')
 
+# We might have multiple IP addresses, so print the list, comma separated
         if 'addr' in le:
-            print(le['addr'], end = ' ')
+            print(*le['addr'], sep=", ", end = ' ')
     
         if ipv6 and 'ipv6' in le:
-            print(le['ipv6'], end = ' ' )
+            print(*le['ipv6'], sep=", ", end = ' ' )
 
         if ether and 'ether' in le:
             print(le['ether'], end = ' ')        
